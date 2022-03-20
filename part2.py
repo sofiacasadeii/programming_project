@@ -52,30 +52,37 @@ import numpy as np
         # return dictionary1
 class Metadata:
      
-     def __init__(self, data: pd.DataFrame):
-        self.data = data 
+     def __init__(self, data: pd.DataFrame): #datamerged: pd.DataFrame):
+        self._data = data 
+        #self._datamerged = datamerged
     
-     @abstractmethod
-     def execute(self): 
-        pass
+     # @abstractmethod
+     # def execute(self): 
+        # pass
 
 class RowsColumns(Metadata):
  
     def execute(self):
-        return self.data.shape     #(number of rows, number of columns)
+        return f"The number of rows of the dataset is {self._data.shape[0]} while the number of columns is {self._data.shape[1]}"            #(number of rows, number of columns)
 
 class ColumnLabel(Metadata):   
 
     def execute(self):
-        return self.data.columns
+        l = []
+        for i in self._data.columns:
+            l += [i] 
+        return f"The labels of the columns are: {l}"
         
 class Distinct(Metadata): 
 
     def execute(self):
-       l = self.data.to_numpy()
+       l = self._data.to_numpy()
        column = l[:,:1]
        final = np.unique(column)
-       final_distinct = (len(final),final)
+       lf = []
+       for i in final:
+            lf += [i]
+       final_distinct = (len(final),l)
        return final_distinct
   
 
@@ -85,20 +92,28 @@ class Sentence(Metadata):
         l = [] 
         id_symbol = eval(input("Give me an ID or symbol: "))
         
-        for index_number in range(len(self.data)): #loops over all the indices of the df
-            if self.data.iat[index_number, 0] == id_symbol: # .iat gives the element of column 0 , at 'index_number'
-                l.append(self.data.iat[index_number, 1])
+        for index_number in range(len(self._data)): #loops over all the indices of the df
+            if self._data.iat[index_number, 0] == id_symbol: # .iat gives the element of column 0 , at 'index_number'
+                l.append(self._data.iat[index_number, 1])
       
         
-        for index_number in range(len(self.data)): #loops over all the indices of the df
-            if self.data.iat[index_number, 4] == id_symbol: # .iat gives the element of column 0 , at 'index_number'
-                l.append(self.data.iat[index_number, 1] ) #append the element that is found in column 1, at 'index_number'
+        for index_number in range(len(self._data)): #loops over all the indices of the df
+            if self._data.iat[index_number, 4] == id_symbol: # .iat gives the element of column 0 , at 'index_number'
+                l.append(self._data.iat[index_number, 1] ) #append the element that is found in column 1, at 'index_number'
     
        
         if not l: #empty lists are considered 'False', so if 'l' is empty then:
             return "No such gene ID or symbol in the dataframe"
         
         return f"{len(l)} sentences found: {l}"
+
+class Merge(Metadata):
+    
+    def associations(self): 
+        return self._data[['gene_symbol', 'disease_name']].value_counts()[:10].index
+       
+
+    
     # def distinct_disease(self):
         # list_disease = self.datadisease['diseaseid'].tolist() 
         # distinct_disease_list = []
