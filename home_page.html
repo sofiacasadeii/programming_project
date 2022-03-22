@@ -1,0 +1,24 @@
+<html>
+    <head>
+        <title>{{ title }}</title>
+    </head>
+    <body>
+        <h1>Genes and Diseases</h1>
+        <h2>List of Operations</h2>
+      
+	<ul>
+        {% for k in operations: %}
+    <li><a href={{url_for('operation', type= k)}}>{{k}}</a></li>
+	{% endfor %}
+	</ul>
+            <!-- <li><a href="{{url_for('operation', type='RowsColumnsGene')}}">Rows Columns Gene</a></li>
+            <li><a href="{{url_for('operation', type='RowsColumnsDisease')}}">Rows Columns Disease</a></li>
+            <li><a href="{{url_for('operation', type='ColumnLabelsGene')}}">Column Labels Gene</a></li>
+            <li><a href="{{url_for('operation', type='ColumnLabelsDisease')}}">Column Labels Disease</a></li>
+            <li><a href="{{url_for('operation', type='DistinctGene')}}">Distinct Gene</a></li>
+            <li><a href="{{url_for('operation', type='DistinctDisease')}}">Distinct Disease</a></li>
+            <li><a href="{{url_for('operation', type='SentenceGene')}}">sentences gene</a></li>
+            <li><a href="{{url_for('operation', type='SentenceDisease')}}">sentences disease</a></li> -->
+       
+    </body>
+</html>
