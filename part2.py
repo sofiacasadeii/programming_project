@@ -1,60 +1,12 @@
 import pandas as pd
 import numpy as np
 
-# class Gene:
-    
-    # def __init__(self, data: pd.DataFrame):
-        # self.data = data
-        
-    # def rows_columns_gene(self):       #(number of rows, number of columns)
-        # return self.data.shape     
-    
-    # def column_labels_gene(self):
-        # return self.data.columns
-        
-    # def distinct_genes(self):
-        # list_gene = self.data['geneid'].tolist() 
-        # distinct_genes_list = []
-        # for i in list_gene:
-            # if i not in distinct_genes_list:
-                # distinct_genes_list.append(i)
-        # return distinct_genes_list       
-    
-    # # def sentences_gene(self, gene):   #LOOK AT THIS BETTER
-        # # l = [] 
-        
-        # # for index_number in range(len(self.data)): #loops over all the indices of the df
-            # # if self.data.iat[index_number, 0] == gene: # .iat gives the element of column 0 , at 'index_number'
-                # # l.append(self.data.iat[index_number, 1])
-        
-        # # for index_number in range(len(self.data)): #loops over all the indices of the df
-            # # if self.data.iat[index_number, 4] == gene: # .iat gives the element of column 0 , at 'index_number'
-                # # l.append(self.data.iat[index_number, 1] ) #append the element that is found in column 1, at 'index_number'
-        
-        # # #if not l: #empty lists are considered 'False', so if 'l' is empty then:
-         # # #   return "No such gene ID or symbol in the dataframe"
-        
-        # # return f"{len(l)} sentences found: {l}" 
-     
-    # def gene_dictionary(self):
-        
-        # df = self.data
-        # c = df.to_numpy()
-        # smaller_one = c[:, [0, 3]]
-        
-        # dictionary1 = {}
-        # for s in self.distinct_genes():
-          # v = []
-          # for geneid, pmid in zip(smaller_one.T[0], smaller_one.T[1]): 
-            # if geneid == s:
-              # v.append(pmid)     
-            # dictionary1[s] = v
-        # return dictionary1
+
 class Metadata:
      
-     def __init__(self, data: pd.DataFrame): #datamerged: pd.DataFrame):
+     def __init__(self, data: pd.DataFrame): 
         self._data = data 
-        #self._datamerged = datamerged
+        
     
      # @abstractmethod
      # def execute(self): 
@@ -88,9 +40,13 @@ class Distinct(Metadata):
 
 class Sentence(Metadata):
     
-    def execute(self):   #LOOK AT THIS BETTER
+    # def __init__(self,data,id_symbol= 1):
+        # Metadata.__init__(self,data)
+        # self.id_symbol = id_symbol
+  
+    def execute_input(self,id_symbol):   #LOOK AT THIS BETTER
         l = [] 
-        id_symbol = eval(input("Give me an ID or symbol: "))
+        #id_symbol = eval(input("Give me an ID or symbol: "))
         
         for index_number in range(len(self._data)): #loops over all the indices of the df
             if self._data.iat[index_number, 0] == id_symbol: # .iat gives the element of column 0 , at 'index_number'
@@ -110,7 +66,9 @@ class Sentence(Metadata):
 class Merge(Metadata):
     
     def associations(self): 
-        return self._data[['gene_symbol', 'disease_name']].value_counts()[:10].index
+        a = self._data[['gene_symbol', 'disease_name']].value_counts()[:10].index
+        #dataframe_a = pd.DataFrame(a, columns = ['Gene', 'Disease'])
+        return a#dataframe_a
        
 
     
