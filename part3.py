@@ -18,8 +18,8 @@ def home_page():
     operations= Registry().name_operations()
     return render_template('home_page.html', title="Home Page", operations=operations)
 
-# @app.route('/success/<name>')
-# def success(name):
+# @app.route('/input_operation/<name>')
+# def input_operation(name):
    # return 'welcome %s' % name
 
 
@@ -27,7 +27,11 @@ def home_page():
 def operation():
     
     my_operation = request.args.get('type')
-    
+    if request.method == 'POST':
+        user = request.form['searchbox']
+        display = Registry().Sentences(user)[str(my_operation)]
+        return render_template('operation.html', title=my_operation, operation=my_operation, display=display)
+
     if str(my_operation) == 'RowsColumnsGene' or str(my_operation) == 'RowsColumnsDisease' :
         display = Registry().RowsColumns()[str(my_operation)]
         return render_template('operation.html', title=my_operation, operation=my_operation, display=display)
@@ -44,26 +48,26 @@ def operation():
     elif str(my_operation) == 'SentenceGene' or str(my_operation) =='SentenceDisease':
         gene = str(myform())
         #if gene != '':           #metti altre condizioni
-       
-        #user = request.form['nm']
-        display = Registry().Sentences(3)[str(my_operation)]
-        print(display)
+        
+        #if request.method == 'POST':
+        #text = request.form.get('text')
+        #user = request.form['searchbox']
+        display = Registry().Sentences(gene)[str(my_operation)]
         return render_template('operation.html', title=my_operation, operation=my_operation, display=display)
+
+        #display = Registry().Sentences(user)[str(my_operation)]
+        #return redirect(url_for(render_template('operation.html', title=my_operation, operation=my_operation, display=display)))
+  
+
+        #display = Registry().Sentences(1)[str(my_operation)]
+        #print(display)
+        #return render_template('operation.html', title=my_operation, operation=my_operation, display=display)
 
     elif str(my_operation) == 'Merge':
         display = Registry().Merge()[str(my_operation)]
         return render_template('operation.html', title=my_operation, operation=my_operation, display=display)
         
     
-
-
-    # elif operation == '':
-        # display = '3'
-        # return render_template('operation.html', title=my_operation, operation=my_operation, display=display)
-    # else:
-        # display = Registry().metadata()[str(my_operation)]
-        # return render_template('operation.html', title=my_operation, operation=my_operation, display=display)
-
 
 if __name__ == '__main__':
     app.run(debug=True)

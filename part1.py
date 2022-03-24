@@ -104,6 +104,7 @@ class Registry:
         r = {'RowsColumnsGene': ImportGene(part2.RowsColumns).operation(),
              'RowsColumnsDisease': ImportDisease(part2.RowsColumns).operation()}
         return r 
+    
     def ColumnLabel(self):
         r = {'ColumnLabelGene': ImportGene(part2.ColumnLabel).operation(),
              'ColumnLabelDisease': ImportDisease(part2.ColumnLabel).operation()}

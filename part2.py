@@ -34,7 +34,7 @@ class Distinct(Metadata):
        lf = []
        for i in final:
             lf += [i]
-       final_distinct = (len(final),l)
+       final_distinct = (len(final),lf)
        return final_distinct
   
 
