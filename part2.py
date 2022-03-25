@@ -49,12 +49,12 @@ class Sentence(Metadata):
         #id_symbol = eval(input("Give me an ID or symbol: "))
         
         for index_number in range(len(self._data)): #loops over all the indices of the df
-            if self._data.iat[index_number, 0] == id_symbol: # .iat gives the element of column 0 , at 'index_number'
+            if self._data.iat[index_number, 0] == int(id_symbol): # .iat gives the element of column 0 , at 'index_number'
                 l.append(self._data.iat[index_number, 1])
       
         
         for index_number in range(len(self._data)): #loops over all the indices of the df
-            if self._data.iat[index_number, 4] == id_symbol: # .iat gives the element of column 0 , at 'index_number'
+            if self._data.iat[index_number, 4] == str(id_symbol): # .iat gives the element of column 0 , at 'index_number'
                 l.append(self._data.iat[index_number, 1] ) #append the element that is found in column 1, at 'index_number'
     
        
@@ -63,12 +63,13 @@ class Sentence(Metadata):
         
         return f"{len(l)} sentences found: {l}"
 
+
 class Merge(Metadata):
     
     def associations(self): 
         a = self._data[['gene_symbol', 'disease_name']].value_counts()[:10].index
-        #dataframe_a = pd.DataFrame(a, columns = ['Gene', 'Disease'])
-        return a#dataframe_a
+        dataframe_a = pd.DataFrame(a, columns = ['Associations: (Gene,Disease)'])
+        return dataframe_a
        
 
     

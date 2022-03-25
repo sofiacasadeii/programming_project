@@ -20,13 +20,9 @@ class ImportDisease:
                 result = operation.execute()
                 return result
     
-    def input_operation(self):
-        for op in self.operations:
-            if str(op) == self.requested_operation: 
-                operation = op(self.dfdisease)
-                result = operation.execute_input(1)
-                return result  
-
+    def input_operation(self,value):
+        result = part2.Sentence(self.dfdisease).execute_input(value) 
+        return result  
 
 class ImportGene:
 
@@ -43,10 +39,11 @@ class ImportGene:
                 return result
 
     def input_operation(self,value):
-        for op in self.operations:
-            if str(op) == 'part2.Sentence': 
-                result = part2.Sentence(self.dfgene).execute_input(value) 
-                #return result   
+        result = part2.Sentence(self.dfgene).execute_input(value) 
+        return result   
+
+# i = ImportGene(part2.Sentence).input_operation(1)
+# print(i)
 
 class MergeDataset(ImportDisease,ImportGene):
     
@@ -86,16 +83,20 @@ class MergeDataset(ImportDisease,ImportGene):
             # 'SentenceDisease': ImportDisease(part2.Sentence).operation(),
             # 'Merge': MergeDataset("disease_evidences.tsv","gene_evidences.tsv",part2.Merge).operation()}
 
-class Registry:
-    
+class Registry():
+  
     # def name_operations(self):
         # n_o = ['Rows and columns of Gene dataset','Rows and columns of Disease dataset','Columns'labels of Gene dataset,'Columns'labels of Disease dataset','Distinct genes','Distinct diseases','Sentences associated to a given gene','Sentences associated to a given disease','10 top most associationsù']
         # return n_o
         
     def name_operations(self):
-        n_o = ['RowsColumnsGene','RowsColumnsDisease','ColumnLabelGene','ColumnLabelDisease','DistinctGene','DistinctDisease','SentenceGene','SentenceDisease','Merge']
+        n_o = ['RowsColumnsGene','RowsColumnsDisease','ColumnLabelGene','ColumnLabelDisease','DistinctGene','DistinctDisease','Merge']
         return n_o
-        
+    
+    def name_operations_input(self):
+        n = ['SentenceGene','SentenceDisease']
+        return n
+    
     # def execute_operation(self):
         # l = ['RowsColumns']
         # return l
@@ -116,9 +117,11 @@ class Registry:
         return r
     
     def Sentences(self,value):
+        #r = ImportGene(part2.Sentence).input_operation(value)
+        #r = ImportGene('part2.Sentence').input_operation(v)
         r = {'SentenceGene': ImportGene(part2.Sentence).input_operation(value),
-             'SentenceDisease': ImportDisease(part2.Sentence).input_operation()}
-        return r 
+             'SentenceDisease': ImportDisease(part2.Sentence).input_operation(value)}
+        return r
         
     def Merge(self):
         r = {'Merge': MergeDataset("disease_evidences.tsv","gene_evidences.tsv",part2.Merge).operation()}
@@ -126,6 +129,12 @@ class Registry:
   
 #z = ImportGene.input_operation('part2.Sentence')
 #d = {'RowsColumnsGene','RowsColumnsDisease','ColumnLabelGene','ColumnLabelDisease','DistinctGene','DistinctDisease','SentenceGene','SentenceDisease','Merge'}
-# dg = pd.read_csv("gene_evidences.tsv", delimiter="\t")     
-# z = (part2.Sentence(dg)).execute_input(1)
-#print(z)
+dg = pd.read_csv("gene_evidences.tsv", delimiter="\t")     
+# z = (part2.Sentence(dg)).execute_input()
+# print(z)
+#display = Registry().Sentences(1)
+#print(display)
+
+
+# display = Registry().Sentences('part2.Sentence',1)
+# print(display)

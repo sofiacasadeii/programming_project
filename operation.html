@@ -4,32 +4,9 @@
         <title>{{ title }}</title>
     </head>
     <body>
-        <h1> {{operation}}</h1>
-        {% if operation == 'SentenceGene': %}
-        
-		<!-- <form name="search" action="/Operation" method="get">
-		Search: <input type="text" name="searchbox">
-		<input type="submit" value="Submit">
-		</form>  -->
-		<form action = "./input_operation" method = "post">
-        <p>Enter Name:</p>
-        <p><input type = "text"  /></p>
-        <p><input type = "submit" value = "submit" /></p>
-        </form>
-		<!-- <form name="search" action="/Operation" method="POST">
-		Search: <input type="text" name="searchbox">
-		<input type="submit" value="Submit">
-			<!-- <input name="variable">
-            <input type="submit"> -->
+        <h1> {{op_input}}</h1>
+      
         {{display}}
-        {% elif operation == '': %}
-        <form method="POST">
-            <input name="text">
-            <input type="submit">
-        </form>
-        {{display}}
-        {% else: %}
-        {{display}}
-        {% endif %}
+    
     </body>
 </html>
